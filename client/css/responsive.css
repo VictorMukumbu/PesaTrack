@@ -1,0 +1,90 @@
+/* =========================================================
+   PesaTrack Responsive Styles
+   ---------------------------------------------------------
+   Mobile-first responsive adjustments.
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  /* =======================================================
+     Header
+     ======================================================= */
+
+  .header h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  /* =======================================================
+     Navigation
+     ======================================================= */
+
+  .section-nav {
+    top: 8px;
+    justify-content: center;
+  }
+
+  .section-nav a {
+    flex: 1 1 calc(50% - 10px);
+    text-align: center;
+  }
+
+  /* =======================================================
+     Forms
+     ======================================================= */
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .button-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* =======================================================
+     Card Header
+     ======================================================= */
+
+  .card-head {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* =======================================================
+     Expense List
+     ======================================================= */
+
+  .list li {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 10px;
+  }
+
+  .list li .name {
+    font-size: 15px;
+  }
+
+  .list li .category,
+  .list li .date,
+  .list li .amount {
+    display: inline-block;
+    margin-top: 2px;
+  }
+
+  .list li .amount {
+    text-align: left;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  /* =======================================================
+     Dashboard
+     ======================================================= */
+
+  .insights-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

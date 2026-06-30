@@ -1,0 +1,132 @@
+/* =========================================================
+   PesaTrack Layout
+   ---------------------------------------------------------
+   Responsible for page structure, spacing, positioning,
+   and grid layouts.
+   ========================================================= */
+
+/* =========================================================
+   Main Container
+   ========================================================= */
+
+.container {
+  width: var(--container-width);
+  margin: var(--space-3xl) auto;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.header {
+  margin-bottom: 18px;
+  border-left: 6px solid var(--color-primary);
+  padding-left: 14px;
+}
+
+.header h1 {
+  margin: 0 0 6px;
+  font-size: var(--font-size-2xl);
+}
+
+.header p {
+  margin: 0;
+}
+
+/* =========================================================
+   Cards
+   ========================================================= */
+
+.card {
+  margin-top: 16px;
+  padding: var(--space-xl);
+
+  background: var(--color-white);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+
+  box-shadow: var(--shadow-md);
+}
+
+.card h2 {
+  margin: 0 0 14px;
+  font-size: var(--font-size-lg);
+}
+
+/* =========================================================
+   Card Header
+   ========================================================= */
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+}
+
+.total {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+/* =========================================================
+   Form Layout
+   ========================================================= */
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+
+  margin-bottom: 14px;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+/* =========================================================
+   Search & Sort Sections
+   ========================================================= */
+
+.search-field,
+.sort-field {
+  margin-top: 14px;
+}
+
+/* =========================================================
+   Dashboard Layout
+   ========================================================= */
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+/* =========================================================
+   Charts Section
+   ========================================================= */
+
+.chart-section {
+  margin-top: 30px;
+}
+
+.category-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================================================
+   Editing State
+   ========================================================= */
+
+.card.editing {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.15);
+}

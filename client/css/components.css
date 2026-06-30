@@ -1,0 +1,341 @@
+/* =========================================================
+   PesaTrack Components
+   ---------------------------------------------------------
+   Reusable UI components used throughout the application.
+   ========================================================= */
+
+
+/* =========================================================
+   Navigation
+   ========================================================= */
+
+.section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  margin: 18px 0;
+  padding: var(--space-md);
+
+  background: var(--color-white);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+
+  box-shadow: var(--shadow-md);
+
+  position: sticky;
+  top: 12px;
+  z-index: 100;
+}
+
+.section-nav a {
+  text-decoration: none;
+
+  color: var(--color-text-primary);
+
+  background: var(--color-background-alt);
+
+  border: 1px solid var(--color-border-light);
+
+  padding: 10px 14px;
+
+  border-radius: var(--radius-md);
+
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+
+  transition: var(--transition-fast);
+}
+
+.section-nav a:hover,
+.section-nav a.active {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+
+/* =========================================================
+   Form Elements
+   ========================================================= */
+
+.field label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: var(--font-size-sm);
+
+  color: var(--color-text-secondary);
+}
+
+.field input,
+.field select {
+  width: 100%;
+
+  padding: var(--space-md);
+
+  background: var(--color-white);
+
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-md);
+
+  outline: none;
+
+  font-size: var(--font-size-md);
+
+  transition: var(--transition-fast);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--color-primary);
+
+  box-shadow: 0 0 0 4px rgba(255, 106, 0, .12);
+}
+
+.search-field input {
+  background: var(--color-background-alt);
+}
+
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.btn {
+  width: 100%;
+
+  padding: var(--space-md);
+
+  border: none;
+  border-radius: var(--radius-lg);
+
+  background: var(--color-primary);
+
+  color: var(--color-white);
+
+  font-weight: var(--font-weight-semibold);
+
+  cursor: pointer;
+
+  transition: var(--transition-fast);
+}
+
+.btn:hover {
+  filter: brightness(.95);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.clear-btn {
+  background: var(--color-accent);
+}
+
+.edit-btn,
+.delete-btn {
+
+  min-width: 70px;
+
+  padding: 8px 12px;
+
+  border: none;
+  border-radius: var(--radius-sm);
+
+  color: var(--color-white);
+
+  font-size: var(--font-size-xs);
+
+  font-weight: var(--font-weight-semibold);
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  justify-self: center;
+
+  transition: var(--transition-fast);
+}
+
+.edit-btn {
+  background: var(--color-secondary);
+}
+
+.delete-btn {
+  background: var(--color-accent);
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  opacity: .9;
+}
+
+
+/* =========================================================
+   Transaction List
+   ========================================================= */
+
+.list {
+  list-style: none;
+
+  padding: 0;
+
+  margin: 12px 0 0;
+}
+
+.list li {
+  display: grid;
+
+  grid-template-columns: 1fr repeat(5, auto);
+
+  align-items: center;
+
+  gap: var(--space-md);
+
+  margin-bottom: 10px;
+
+  padding: 14px;
+
+  background: var(--color-white);
+
+  border: 1px solid var(--color-border-light);
+
+  border-radius: var(--radius-lg);
+
+  transition: var(--transition-fast);
+}
+
+.list li:hover {
+  border-color: var(--color-primary);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.list li .name {
+  font-weight: var(--font-weight-semibold);
+}
+
+.list li .category {
+  background: var(--color-primary-light);
+
+  color: var(--color-primary);
+
+  padding: 4px 8px;
+
+  border-radius: var(--radius-pill);
+
+  font-size: var(--font-size-xs);
+
+  font-weight: var(--font-weight-semibold);
+}
+
+.list li .date {
+  color: var(--color-text-gray);
+
+  font-size: var(--font-size-sm);
+
+  white-space: nowrap;
+}
+
+.list li .amount {
+  text-align: right;
+
+  color: var(--color-primary);
+
+  font-weight: var(--font-weight-bold);
+}
+
+
+/* =========================================================
+   Dashboard Cards
+   ========================================================= */
+
+.insight-card {
+  padding: 16px;
+
+  text-align: center;
+
+  background: var(--color-background-alt);
+
+  border: 1px solid var(--color-border-light);
+
+  border-radius: var(--radius-lg);
+}
+
+.insight-card h3 {
+  margin: 0 0 6px;
+
+  font-size: var(--font-size-md);
+
+  color: var(--color-text-light);
+}
+
+.insight-card p {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-size: var(--font-size-lg);
+
+  font-weight: var(--font-weight-bold);
+}
+
+
+/* =========================================================
+   Charts
+   ========================================================= */
+
+.chart-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.chart-bar-container {
+  flex: 1;
+
+  height: 20px;
+
+  overflow: hidden;
+
+  background: #f3f3f3;
+
+  border-radius: var(--radius-pill);
+}
+
+.chart-bar {
+  height: 100%;
+
+  width: 0%;
+
+  background: var(--color-primary);
+
+  border-radius: var(--radius-pill);
+
+  transition: width .3s ease;
+}
+
+.chart-label {
+  width: 120px;
+
+  color: var(--color-text-secondary);
+
+  font-weight: var(--font-weight-semibold);
+}
+
+.chart-value {
+  width: 90px;
+
+  text-align: right;
+
+  color: var(--color-text-primary);
+
+  font-size: var(--font-size-md);
+
+  font-weight: var(--font-weight-semibold);
+}
