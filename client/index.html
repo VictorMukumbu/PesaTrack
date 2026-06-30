@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PesaTrack</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>PesaTrack</h1>
+      <p>Track every shilling. Build better money habits.</p>
+    </header>
+
+    <!-- navigation links to sections -->
+    <nav class="section-nav">
+      <a href="#addExpenseSection">Add Expense</a>
+      <a href="#expensesSection">Expenses</a>
+      <a href="#insightsSection">Insights</a>
+      <a href="#spendingChartSection">Chart</a>
+      <a href="#categoryTotalsSection">Category Totals</a>
+    </nav>
+
+    <section id="addExpenseSection" class="card">
+      <h2>Add Expense</h2>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="expenseName">Expense</label>
+          <input id="expenseName" type="text" placeholder="e.g. Lunch" />
+        </div>
+
+        <div class="field">
+          <label for="expenseAmount">Amount (KES)</label>
+          <input id="expenseAmount" type="number" placeholder="e.g. 150" />
+        </div>
+
+        <div class="field">
+          <label for="expenseCategory">Category</label>
+          <select id="expenseCategory">
+            <option value="">Select category</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Airtime/Data">Airtime/Data</option>
+            <option value="Bills">Bills</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="expenseDate">Date</label>
+          <input id="expenseDate" type="date" />
+        </div>
+        
+      </div>
+
+      <div class="button-row">
+        <button id="addExpenseBtn" class="btn" type="button">Add Expense</button>
+        <button id="clearExpensesBtn" class="btn clear-btn" type="button">Clear All</button>
+      </div>
+    </section>
+
+    <section  id="expensesSection" class="card">
+      <div class="card-head">
+        <h2>Expenses</h2>
+        <h3 class="total">Total: <span id="totalAmount">KES 0.00</span></h3>
+      </div>
+
+      <div class="field search-field">
+        <label for="searchExpense">Search Expenses</label>
+        <input
+          id="searchExpense"
+          type="text"
+          placeholder="Search by name or category"
+        />
+      </div>
+
+      <!-- sort expenses by name, amount, or category -->
+      <div class="field sort-field">
+        <label for="sortExpenses">Sort Expenses</label>
+        <select id="sortExpenses">
+          <option value="default">Default</option>
+          <option value="name-asc">Name (A-Z)</option>
+          <option value="name-desc">Name (Z-A)</option>
+          <option value="amount-asc">Amount (Low to High)</option>
+          <option value="amount-desc">Amount (High to Low)</option>
+          <option value="category-asc">Category (A-Z)</option>
+        </select>
+      </div>
+
+      <ul id="expenseList" class="list">
+        <!-- expenses will appear here -->
+      </ul>
+    </section>
+
+    <!-- dashboard with total expenses by category -->
+     <section  id="insightsSection" class="card">
+      <h2>Spending Insights</h2>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h3>Total Expenses</h3>
+          <p id="totalExpensesCount">0</p>
+        </div>
+
+        <div class="insight-card">
+          <h3>Average Expense</h3>
+          <p id="averageExpense">KES 0.00</p>
+        </div>
+
+        <div class="insight-card">
+          <h3>Top Category</h3>
+          <p id="topCategory">None</p>
+        </div>
+
+        <div class="insight-card">
+          <h3>Last Expense</h3>
+          <p id="lastExpense">None</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- chart section showing category spending breakdown -->
+    <section id="spendingChartSection" class="card chart-section">
+      <h2>Category Spending Chart</h2>
+      <div id="categoryChart" class="category-chart"></div>
+    </section>
+
+
+    <section id="categoryTotalsSection" class="card">
+      <h2>Category Totals</h2>
+      <ul id="categoryTotals" class="list">
+        <li>
+          <span class="name">Food</span>
+          <span class="amount" id="foodTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Transport</span>
+          <span class="amount" id="transportTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Airtime/Data</span>
+          <span class="amount" id="airtimeTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Bills</span>
+          <span class="amount" id="billsTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Other</span>
+          <span class="amount" id="otherTotal">KES 0.00</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
