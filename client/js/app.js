@@ -20,6 +20,7 @@ import {
   lastExpenseDisplay,
   navLinks,
   trackedSections,
+  categoryChart,
 } from "./dom.js";
 
 import {
@@ -28,31 +29,22 @@ import {
   clearInputs,
 } from "./utils.js";
 
-let total = 0;
-let expenses = [];
-let editingExpenseIndex = null;
-
-// one reusable function that returns a fresh category totals object
-
-
-
-let categoryTotals = getDefaultCategoryTotals();
-
+import { state } from "./state.js";
 
 function updateTotalUI() {
-  totalAmountDisplay.textContent = `KES ${total.toFixed(2)}`;
+  totalAmountDisplay.textContent = `KES ${state.total.toFixed(2)}`;
 }
 
 function updateCategoryTotalsUI() {
-  foodTotalDisplay.textContent = `KES ${categoryTotals["Food"].toFixed(2)}`;
-  transportTotalDisplay.textContent = `KES ${categoryTotals["Transport"].toFixed(2)}`;
-  airtimeTotalDisplay.textContent = `KES ${categoryTotals["Airtime/Data"].toFixed(2)}`;
-  billsTotalDisplay.textContent = `KES ${categoryTotals["Bills"].toFixed(2)}`;
-  otherTotalDisplay.textContent = `KES ${categoryTotals["Other"].toFixed(2)}`;
+  foodTotalDisplay.textContent = `KES ${state.categoryTotals["Food"].toFixed(2)}`;
+  transportTotalDisplay.textContent = `KES ${state.categoryTotals["Transport"].toFixed(2)}`;
+  airtimeTotalDisplay.textContent = `KES ${state.categoryTotals["Airtime/Data"].toFixed(2)}`;
+  billsTotalDisplay.textContent = `KES ${state.categoryTotals["Bills"].toFixed(2)}`;
+  otherTotalDisplay.textContent = `KES ${state.categoryTotals["Other"].toFixed(2)}`;
 }
 //update dashboard insights
 function updateInsightsUI() {
-  const totalExpensesCount = expenses.length;
+  const totalExpensesCount = state.expenses.length;
   totalExpensesCountDisplay.textContent = totalExpensesCount;
 
   if (totalExpensesCount === 0) {
@@ -62,33 +54,33 @@ function updateInsightsUI() {
     return;
   }
 
-  const averageExpense = total / totalExpensesCount;
+  const averageExpense = state.total / totalExpensesCount;
   averageExpenseDisplay.textContent = `KES ${averageExpense.toFixed(2)}`;
 
   let topCategory = "None";
   let highestCategoryTotal = 0;
 
-  for (const category in categoryTotals) {
-    if (categoryTotals[category] > highestCategoryTotal) {
-      highestCategoryTotal = categoryTotals[category];
+  for (const category in state.categoryTotals) {
+    if (state.categoryTotals[category] > highestCategoryTotal) {
+      highestCategoryTotal = state.categoryTotals[category];
       topCategory = category;
     }
   }
 
   topCategoryDisplay.textContent = topCategory;
 
-  const lastExpense = expenses[expenses.length - 1];
+  const lastExpense = state.expenses[state.expenses.length - 1];
   lastExpenseDisplay.textContent = `${lastExpense.name} - KES ${lastExpense.amount.toFixed(2)} (${lastExpense.category}, ${formatDate(lastExpense.date) || "No date"})`;
 }
 
 // recalculate totals from the expenses array
 function recalculateTotals() {
-  total = 0;
-  categoryTotals = getDefaultCategoryTotals();
+  state.total = 0;
+  state.categoryTotals = getDefaultCategoryTotals();
 
-  expenses.forEach((expense) => {
-    total += expense.amount;
-    categoryTotals[expense.category] += expense.amount;
+  state.expenses.forEach((expense) => {
+    state.total += expense.amount;
+    state.categoryTotals[expense.category] += expense.amount;
   });
 
   updateTotalUI();
@@ -97,7 +89,7 @@ function recalculateTotals() {
 }
 
 function saveExpensesToLocalStorage() {
-  localStorage.setItem("expenses", JSON.stringify(expenses));
+  localStorage.setItem("expenses", JSON.stringify(state.expenses));
 }
 
 
@@ -127,9 +119,9 @@ function createExpenseListItem(expense) {
   editBtn.classList.add("edit-btn");
 
   editBtn.addEventListener("click", function () {
-    const expenseIndex = expenses.indexOf(expense);
+    const expenseIndex = state.expenses.indexOf(expense);
 
-    editingExpenseIndex = expenseIndex;
+    state.editingExpenseIndex = expenseIndex;
 
     expenseNameInput.value = expense.name;
     expenseAmountInput.value = expense.amount;
@@ -158,7 +150,7 @@ function createExpenseListItem(expense) {
   deleteBtn.classList.add("delete-btn");
 
   deleteBtn.addEventListener("click", function () {
-    expenses = expenses.filter((item) => item !== expense);
+    state.expenses = state.expenses.filter((item) => item !== expense);
     saveExpensesToLocalStorage();
     recalculateTotals();
     renderExpenses();
@@ -180,7 +172,7 @@ function renderExpenses() {
   const searchTerm = searchExpenseInput.value.toLowerCase();
   const sortValue = sortExpensesSelect.value;
 
-  let filteredExpenses = expenses.filter((expense) => {
+  let filteredExpenses = state.expenses.filter((expense) => {
     const nameMatch = expense.name.toLowerCase().includes(searchTerm);
     const categoryMatch = expense.category.toLowerCase().includes(searchTerm);
     const dateMatch = (expense.date || "").toLowerCase().includes(searchTerm);
@@ -203,7 +195,7 @@ function renderExpenses() {
   if (filteredExpenses.length === 0) {
     const emptyMessage = document.createElement("li");
 
-    if (expenses.length === 0) {
+    if (state.expenses.length === 0) {
       emptyMessage.textContent = "No expenses added yet.";
     } else {
       emptyMessage.textContent = "No matching expenses found.";
@@ -249,11 +241,11 @@ function addExpense() {
     date: expenseDate
   };
 
-  if (editingExpenseIndex !== null) {
-    expenses[editingExpenseIndex] = expense;
-    editingExpenseIndex = null;
+  if (state.editingExpenseIndex !== null) {
+    state.expenses[state.editingExpenseIndex] = expense;
+    state.editingExpenseIndex = null;
   } else {
-    expenses.push(expense);
+    state.expenses.push(expense);
   }
   saveExpensesToLocalStorage();
   
@@ -276,10 +268,10 @@ function addExpense() {
 
 
 function clearAllExpenses() {
-  expenses = [];
-  categoryTotals = getDefaultCategoryTotals();
-  total = 0;
-  editingExpenseIndex = null;
+  state.expenses = [];
+  state.categoryTotals = getDefaultCategoryTotals();
+  state.total = 0;
+  state.editingExpenseIndex = null;
 
   localStorage.removeItem("expenses");
   recalculateTotals();
@@ -317,15 +309,15 @@ function updateActiveNavLink() {
 }
 
 function renderCategoryChart() {
-  const chartContainer = document.getElementById("categoryChart");
+  const chartContainer = categoryChart;
 
   // clear previous chart
   chartContainer.innerHTML = "";
 
-  const maxValue = Math.max(...Object.values(categoryTotals), 1);
+  const maxValue = Math.max(...Object.values(state.categoryTotals), 1);
 
-  for (let category in categoryTotals) {
-    const amount = categoryTotals[category];
+  for (let category in state.categoryTotals) {
+    const amount = state.categoryTotals[category];
 
     const percentage = (amount / maxValue) * 100;
 
@@ -352,7 +344,7 @@ function loadExpensesFromLocalStorage() {
     return;
   }
 
-  expenses = JSON.parse(savedExpenses);
+  state.expenses = JSON.parse(savedExpenses);
   
   recalculateTotals();
   renderExpenses();
