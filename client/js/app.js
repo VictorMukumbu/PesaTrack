@@ -1,46 +1,43 @@
+import {
+  totalAmountDisplay,
+  expenseNameInput,
+  expenseAmountInput,
+  expenseCategoryInput,
+  expenseDateInput,
+  addExpenseBtn,
+  clearExpensesBtn,
+  expenseList,
+  searchExpenseInput,
+  sortExpensesSelect,
+  foodTotalDisplay,
+  transportTotalDisplay,
+  airtimeTotalDisplay,
+  billsTotalDisplay,
+  otherTotalDisplay,
+  totalExpensesCountDisplay,
+  averageExpenseDisplay,
+  topCategoryDisplay,
+  lastExpenseDisplay,
+  navLinks,
+  trackedSections,
+} from "./dom.js";
+
+import {
+  getDefaultCategoryTotals,
+  formatDate,
+  clearInputs,
+} from "./utils.js";
+
 let total = 0;
 let expenses = [];
 let editingExpenseIndex = null;
 
 // one reusable function that returns a fresh category totals object
-function getDefaultCategoryTotals() {
-  return {
-    Food: 0,
-    Transport: 0,
-    "Airtime/Data": 0,
-    Bills: 0,
-    Other: 0
-  };
-}
 
 
 
 let categoryTotals = getDefaultCategoryTotals();
 
-const totalAmountDisplay = document.getElementById("totalAmount");
-
-const expenseNameInput = document.getElementById("expenseName");
-const expenseAmountInput = document.getElementById("expenseAmount");
-const expenseCategoryInput = document.getElementById("expenseCategory");
-const expenseDateInput = document.getElementById("expenseDate");
-
-const addExpenseBtn = document.getElementById("addExpenseBtn");
-const clearExpensesBtn = document.getElementById("clearExpensesBtn");
-const expenseList = document.getElementById("expenseList");
-
-const searchExpenseInput = document.getElementById("searchExpense");
-const sortExpensesSelect = document.getElementById("sortExpenses");
-
-const foodTotalDisplay = document.getElementById("foodTotal");
-const transportTotalDisplay = document.getElementById("transportTotal");
-const airtimeTotalDisplay = document.getElementById("airtimeTotal");
-const billsTotalDisplay = document.getElementById("billsTotal");
-const otherTotalDisplay = document.getElementById("otherTotal");
-
-const totalExpensesCountDisplay = document.getElementById("totalExpensesCount");
-const averageExpenseDisplay = document.getElementById("averageExpense");
-const topCategoryDisplay = document.getElementById("topCategory");
-const lastExpenseDisplay = document.getElementById("lastExpense");
 
 function updateTotalUI() {
   totalAmountDisplay.textContent = `KES ${total.toFixed(2)}`;
@@ -103,32 +100,7 @@ function saveExpensesToLocalStorage() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 
-// one function that clears the form inputs
-function clearInputs() {
-  expenseNameInput.value = "";
-  expenseAmountInput.value = "";
-  expenseCategoryInput.value = "";
-  expenseDateInput.value = "";
-}
 
-//make date readable
-function formatDate(dateString) {
-  if (!dateString) return "No date";// handle empty date
-  
-  const date = new Date(dateString);
-
-  if (isNaN(date.getTime())) {
-    return "Invalid date";
-  }//handle invalid date input
-
-  const options = {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  };
-
-  return date.toLocaleDateString("en-GB", options);
-}
 
 function createExpenseListItem(expense) {
   const listItem = document.createElement("li");
@@ -288,7 +260,12 @@ function addExpense() {
   recalculateTotals();
   renderExpenses();
 
-  clearInputs();
+  clearInputs({
+    expenseNameInput,
+    expenseAmountInput,
+    expenseCategoryInput,
+    expenseDateInput,
+  });
 
   addExpenseBtn.textContent = "Add Expense";
   // remove editing class to return form to normal state
@@ -311,10 +288,6 @@ function clearAllExpenses() {
   addExpenseBtn.textContent = "Add Expense";
 }
 
-const navLinks = document.querySelectorAll(".section-nav a");
-const trackedSections = document.querySelectorAll(
-  "#addExpenseSection, #expensesSection, #insightsSection,#spendingChartSection, #categoryTotalsSection"
-);
 
 // focus on updating active nav link based on scroll position
 function updateActiveNavLink() {
