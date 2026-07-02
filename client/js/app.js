@@ -31,6 +31,12 @@ import {
 
 import { state } from "./state.js";
 
+import {
+  saveExpenses,
+  loadExpenses,
+  clearExpenseStorage,
+} from "./storage.js";
+
 function updateTotalUI() {
   totalAmountDisplay.textContent = `KES ${state.total.toFixed(2)}`;
 }
@@ -88,9 +94,6 @@ function recalculateTotals() {
   updateInsightsUI();
 }
 
-function saveExpensesToLocalStorage() {
-  localStorage.setItem("expenses", JSON.stringify(state.expenses));
-}
 
 
 
@@ -151,7 +154,7 @@ function createExpenseListItem(expense) {
 
   deleteBtn.addEventListener("click", function () {
     state.expenses = state.expenses.filter((item) => item !== expense);
-    saveExpensesToLocalStorage();
+    saveExpenses();
     recalculateTotals();
     renderExpenses();
   });
@@ -247,7 +250,7 @@ function addExpense() {
   } else {
     state.expenses.push(expense);
   }
-  saveExpensesToLocalStorage();
+  saveExpenses ();
   
   recalculateTotals();
   renderExpenses();
@@ -273,7 +276,7 @@ function clearAllExpenses() {
   state.total = 0;
   state.editingExpenseIndex = null;
 
-  localStorage.removeItem("expenses");
+  clearExpenseStorage();
   recalculateTotals();
   renderExpenses();
 
@@ -337,19 +340,6 @@ function renderCategoryChart() {
 }
 
 
-function loadExpensesFromLocalStorage() {
-  const savedExpenses = localStorage.getItem("expenses");
-
-  if (!savedExpenses) {
-    return;
-  }
-
-  state.expenses = JSON.parse(savedExpenses);
-  
-  recalculateTotals();
-  renderExpenses();
-
-}
 
 addExpenseBtn.addEventListener("click", addExpense);
 clearExpensesBtn.addEventListener("click", clearAllExpenses);
@@ -359,4 +349,7 @@ sortExpensesSelect.addEventListener("change", renderExpenses);
 window.addEventListener("scroll", updateActiveNavLink);
 window.addEventListener("load", updateActiveNavLink);
 
-loadExpensesFromLocalStorage();
+loadExpenses();
+
+recalculateTotals();
+renderExpenses();
