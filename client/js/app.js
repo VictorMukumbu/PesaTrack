@@ -21,6 +21,7 @@ import {
   navLinks,
   trackedSections,
   categoryChart,
+  addExpenseSection,
 } from "./dom.js";
 
 import {
@@ -101,9 +102,7 @@ function addExpense() {
 
   addExpenseBtn.textContent = "Add Expense";
   // remove editing class to return form to normal state
-  document
-  .getElementById("addExpenseSection")
-  .classList.remove("editing");
+  addExpenseSection.classList.remove("editing");
 }
 
 

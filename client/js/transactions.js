@@ -14,7 +14,6 @@ import { state } from "./state.js";
 
 import {
   formatDate,
-  clearInputs,
 } from "./utils.js";
 
 import {
@@ -138,7 +137,6 @@ function renderExpenses() {
     createExpenseListItem(expense);
   });
 
-//   renderCategoryChart();
 
 }
 
