@@ -6,6 +6,9 @@
 export const totalAmountDisplay =
   document.getElementById("totalAmount");
 
+export const addExpenseSection =
+  document.getElementById("addExpenseSection");  
+
 export const expenseNameInput =
   document.getElementById("expenseName");
 
