@@ -60,14 +60,12 @@ function createExpenseListItem(expense) {
     addExpenseBtn.textContent = "Update Expense";
 
     // add editing class to highlight the form when in edit mode
-    document
-    .getElementById("addExpenseSection")
-    .classList.add("editing");
+    addExpenseSection.classList.add("editing");
 
     // scroll to the add/edit form and focus the name input for better UX
-    document
-      .getElementById("addExpenseSection")
-      .scrollIntoView({ behavior: "smooth" });
+    addExpenseSection.scrollIntoView({
+    behavior: "smooth",
+    });
 
     expenseNameInput.focus();
   });
@@ -78,11 +76,14 @@ function createExpenseListItem(expense) {
   deleteBtn.classList.add("delete-btn");
 
   deleteBtn.addEventListener("click", function () {
-    state.expenses = state.expenses.filter((item) => item !== expense);
-    saveExpenses();
-    recalculateTotals();
-    renderExpenses();
-  });
+  state.expenses = state.expenses.filter((item) => item !== expense);
+
+  saveExpenses();
+
+  expenseList.dispatchEvent(
+    new CustomEvent("expenseDeleted")
+  );
+});
 
   listItem.appendChild(nameSpan);
   listItem.appendChild(categorySpan);
@@ -94,6 +95,53 @@ function createExpenseListItem(expense) {
   expenseList.appendChild(listItem);
 }
 
+function renderExpenses() {
+  expenseList.innerHTML = "";
+
+  const searchTerm = searchExpenseInput.value.toLowerCase();
+  const sortValue = sortExpensesSelect.value;
+
+  let filteredExpenses = state.expenses.filter((expense) => {
+    const nameMatch = expense.name.toLowerCase().includes(searchTerm);
+    const categoryMatch = expense.category.toLowerCase().includes(searchTerm);
+    const dateMatch = (expense.date || "").toLowerCase().includes(searchTerm);
+
+    return nameMatch || categoryMatch || dateMatch;
+  });
+
+  if (sortValue === "name-asc") {
+    filteredExpenses.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortValue === "name-desc") {
+    filteredExpenses.sort((a, b) => b.name.localeCompare(a.name));
+  } else if (sortValue === "amount-asc") {
+    filteredExpenses.sort((a, b) => a.amount - b.amount);
+  } else if (sortValue === "amount-desc") {
+    filteredExpenses.sort((a, b) => b.amount - a.amount);
+  } else if (sortValue === "category-asc") {
+    filteredExpenses.sort((a, b) => a.category.localeCompare(b.category));
+  }
+
+  if (filteredExpenses.length === 0) {
+    const emptyMessage = document.createElement("li");
+
+    if (state.expenses.length === 0) {
+      emptyMessage.textContent = "No expenses added yet.";
+    } else {
+      emptyMessage.textContent = "No matching expenses found.";
+    }
+
+    expenseList.appendChild(emptyMessage);
+    return;
+  }
+
+  filteredExpenses.forEach((expense) => {
+    createExpenseListItem(expense);
+  });
+
+//   renderCategoryChart();
+
+}
+
 export {
-  createExpenseListItem,
+  createExpenseListItem,renderExpenses
 };

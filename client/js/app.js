@@ -38,7 +38,7 @@ import {
 } from "./storage.js";
 
 import {
-  createExpenseListItem,
+  createExpenseListItem,renderExpenses,
 } from "./transactions.js";
 
 function updateTotalUI() {
@@ -103,52 +103,7 @@ function recalculateTotals() {
 
 
 
-function renderExpenses() {
-  expenseList.innerHTML = "";
 
-  const searchTerm = searchExpenseInput.value.toLowerCase();
-  const sortValue = sortExpensesSelect.value;
-
-  let filteredExpenses = state.expenses.filter((expense) => {
-    const nameMatch = expense.name.toLowerCase().includes(searchTerm);
-    const categoryMatch = expense.category.toLowerCase().includes(searchTerm);
-    const dateMatch = (expense.date || "").toLowerCase().includes(searchTerm);
-
-    return nameMatch || categoryMatch || dateMatch;
-  });
-
-  if (sortValue === "name-asc") {
-    filteredExpenses.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sortValue === "name-desc") {
-    filteredExpenses.sort((a, b) => b.name.localeCompare(a.name));
-  } else if (sortValue === "amount-asc") {
-    filteredExpenses.sort((a, b) => a.amount - b.amount);
-  } else if (sortValue === "amount-desc") {
-    filteredExpenses.sort((a, b) => b.amount - a.amount);
-  } else if (sortValue === "category-asc") {
-    filteredExpenses.sort((a, b) => a.category.localeCompare(b.category));
-  }
-
-  if (filteredExpenses.length === 0) {
-    const emptyMessage = document.createElement("li");
-
-    if (state.expenses.length === 0) {
-      emptyMessage.textContent = "No expenses added yet.";
-    } else {
-      emptyMessage.textContent = "No matching expenses found.";
-    }
-
-    expenseList.appendChild(emptyMessage);
-    return;
-  }
-
-  filteredExpenses.forEach((expense) => {
-    createExpenseListItem(expense);
-  });
-
-  renderCategoryChart();
-
-}
 
 function addExpense() {
   const expenseName = expenseNameInput.value.trim();
@@ -188,6 +143,7 @@ function addExpense() {
   
   recalculateTotals();
   renderExpenses();
+  renderCategoryChart();
 
   clearInputs({
     expenseNameInput,
@@ -213,6 +169,7 @@ function clearAllExpenses() {
   clearExpenseStorage();
   recalculateTotals();
   renderExpenses();
+  renderCategoryChart();
 
   addExpenseBtn.textContent = "Add Expense";
 }
@@ -280,6 +237,14 @@ clearExpensesBtn.addEventListener("click", clearAllExpenses);
 searchExpenseInput.addEventListener("input", renderExpenses);
 sortExpensesSelect.addEventListener("change", renderExpenses);
 
+expenseList.addEventListener("expenseDeleted", () => {
+  recalculateTotals();
+
+  renderExpenses();
+
+  renderCategoryChart();
+});
+
 window.addEventListener("scroll", updateActiveNavLink);
 window.addEventListener("load", updateActiveNavLink);
 
@@ -287,3 +252,4 @@ loadExpenses();
 
 recalculateTotals();
 renderExpenses();
+renderCategoryChart();
