@@ -142,6 +142,37 @@ function renderExpenses() {
 
 }
 
+function addExpense(expense) {
+  state.expenses.push(expense);
+  saveExpenses();
+}
+
+function updateExpense(expense) {
+  state.expenses[state.editingExpenseIndex] = expense;
+  state.editingExpenseIndex = null;
+  saveExpenses();
+}
+
+function deleteExpense(expense) {
+  state.expenses = state.expenses.filter(
+    (item) => item !== expense
+  );
+
+  saveExpenses();
+}
+
+function clearAllExpenses() {
+  state.expenses = [];
+  state.editingExpenseIndex = null;
+
+  clearExpenseStorage();
+}
+
 export {
-  createExpenseListItem,renderExpenses
+  createExpenseListItem,
+  renderExpenses,
+  addExpense,
+  updateExpense,
+  deleteExpense,
+  clearAllExpenses,
 };

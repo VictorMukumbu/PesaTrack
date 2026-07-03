@@ -31,14 +31,13 @@ import {
 
 import { state } from "./state.js";
 
-import {
-  saveExpenses,
-  loadExpenses,
-  clearExpenseStorage,
-} from "./storage.js";
+import { loadExpenses } from "./storage.js";
 
 import {
-  createExpenseListItem,renderExpenses,
+  renderExpenses,
+  addExpense as addExpenseTransaction,
+  updateExpense,
+  clearAllExpenses as clearAllExpensesTransaction,
 } from "./transactions.js";
 
 import {
@@ -84,12 +83,10 @@ function addExpense() {
   };
 
   if (state.editingExpenseIndex !== null) {
-    state.expenses[state.editingExpenseIndex] = expense;
-    state.editingExpenseIndex = null;
+    updateExpense(expense);
   } else {
-    state.expenses.push(expense);
+    addExpenseTransaction(expense);
   }
-  saveExpenses ();
   
   recalculateTotals();
   renderExpenses();
@@ -111,12 +108,11 @@ function addExpense() {
 
 
 function clearAllExpenses() {
-  state.expenses = [];
+  clearAllExpensesTransaction();
+
   state.categoryTotals = getDefaultCategoryTotals();
   state.total = 0;
-  state.editingExpenseIndex = null;
 
-  clearExpenseStorage();
   recalculateTotals();
   renderExpenses();
   renderCategoryChart();
