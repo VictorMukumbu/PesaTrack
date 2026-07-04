@@ -70,6 +70,10 @@ export const trackedSections =
   document.querySelectorAll(
     "#addExpenseSection, #expensesSection, #insightsSection, #spendingChartSection, #categoryTotalsSection"
   );
+
   
 export const categoryChart =
   document.getElementById("categoryChart");
+
+export const toastContainer =
+  document.getElementById("toastContainer");  
