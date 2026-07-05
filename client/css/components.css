@@ -411,3 +411,54 @@
   background: #1f2937;
   border-left: 6px solid #111827;
 }
+
+/* ======================================================
+   Confirmation Modal
+====================================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  z-index: 10000;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  width: 90%;
+  max-width: 420px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 24px;
+
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.modal h2 {
+  margin-bottom: 16px;
+}
+
+.modal p {
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}

@@ -75,12 +75,10 @@ function createExpenseListItem(expense) {
   deleteBtn.classList.add("delete-btn");
 
   deleteBtn.addEventListener("click", function () {
-  state.expenses = state.expenses.filter((item) => item !== expense);
-
-  saveExpenses();
-
   expenseList.dispatchEvent(
-    new CustomEvent("expenseDeleted")
+    new CustomEvent("deleteExpense", {
+      detail: expense,
+    })
   );
 });
 

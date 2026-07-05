@@ -22,6 +22,12 @@ import {
   trackedSections,
   categoryChart,
   addExpenseSection,
+
+  confirmModal,
+  confirmTitle,
+  confirmMessage,
+  confirmActionBtn,
+  cancelConfirmBtn,
 } from "./dom.js";
 
 import {
@@ -32,7 +38,7 @@ import {
 
 import { state } from "./state.js";
 
-import { loadExpenses } from "./storage.js";
+import { loadExpenses,saveExpenses, } from "./storage.js";
 
 import {
   renderExpenses,
@@ -54,6 +60,26 @@ import { showToast } from "./notifications.js";
 
 
 
+
+//  Confirmation Modal Helper
+
+function openConfirmationModal(title, message,confirmButtonText, onConfirm) {
+  confirmTitle.textContent = title;
+  confirmMessage.textContent = message;
+
+  confirmActionBtn.textContent = confirmButtonText;
+
+  confirmModal.classList.remove("hidden");
+
+  confirmActionBtn.onclick = () => {
+    onConfirm();
+    confirmModal.classList.add("hidden");
+  };
+
+  cancelConfirmBtn.onclick = () => {
+    confirmModal.classList.add("hidden");
+  };
+}
 
 function addExpense() {
   const expenseName = expenseNameInput.value.trim();
@@ -120,20 +146,29 @@ function addExpense() {
 
 
 function clearAllExpenses() {
-  clearAllExpensesTransaction();
+  openConfirmationModal(
+  "Clear All Expenses",
+  "Are you sure you want to delete all expenses? This action cannot be undone.",
+  "Delete All",
+  () => {
+      clearAllExpensesTransaction();
 
-  state.categoryTotals = getDefaultCategoryTotals();
-  state.total = 0;
+      state.categoryTotals = getDefaultCategoryTotals();
+      state.total = 0;
+      state.editingExpenseIndex = null;
 
-  recalculateTotals();
-  renderExpenses();
-  renderCategoryChart();
+      recalculateTotals();
+      renderExpenses();
+      renderCategoryChart();
 
-  addExpenseBtn.textContent = "Add Expense";
+      addExpenseBtn.textContent = "Add Expense";
+      addExpenseSection.classList.remove("editing");
 
-  showToast(
-    "All expenses cleared successfully!",
-    "info"
+      showToast(
+        "All expenses cleared successfully!",
+        "info"
+      );
+    }
   );
 }
 
@@ -174,12 +209,30 @@ clearExpensesBtn.addEventListener("click", clearAllExpenses);
 searchExpenseInput.addEventListener("input", renderExpenses);
 sortExpensesSelect.addEventListener("change", renderExpenses);
 
-expenseList.addEventListener("expenseDeleted", () => {
-  recalculateTotals();
+expenseList.addEventListener("deleteExpense", (event) => {
+  const expense = event.detail;
 
-  renderExpenses();
+  openConfirmationModal(
+    "Delete Expense",
+    `Are you sure you want to delete "${expense.name}"?\nThis action cannot be undone.`,
+    "Delete",
+    () => {
+      state.expenses = state.expenses.filter(
+        (item) => item !== expense
+      );
 
-  renderCategoryChart();
+      saveExpenses();
+
+      recalculateTotals();
+      renderExpenses();
+      renderCategoryChart();
+
+      showToast(
+        "Expense deleted successfully!",
+        "info"
+      );
+    }
+  );
 });
 
 window.addEventListener("scroll", updateActiveNavLink);

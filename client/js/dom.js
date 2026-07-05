@@ -77,3 +77,18 @@ export const categoryChart =
 
 export const toastContainer =
   document.getElementById("toastContainer");  
+
+export const confirmModal =
+  document.getElementById("confirmModal");
+
+export const confirmTitle =
+  document.getElementById("confirmTitle");
+
+export const confirmMessage =
+  document.getElementById("confirmMessage");
+
+export const confirmActionBtn =
+  document.getElementById("confirmActionBtn");
+
+export const cancelConfirmBtn =
+  document.getElementById("cancelConfirmBtn");  

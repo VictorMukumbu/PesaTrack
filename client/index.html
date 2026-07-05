@@ -161,6 +161,35 @@
   <!-- Toast notifications -->
   <div id="toastContainer"></div>
 
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="modal-overlay hidden">
+    <div class="modal">
+      <h2 id="confirmTitle">Confirm Action</h2>
+
+      <p id="confirmMessage">
+        Are you sure you want to continue?
+      </p>
+
+      <div class="modal-buttons">
+        <button
+          id="cancelConfirmBtn"
+          class="btn"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="confirmActionBtn"
+          class="btn delete-btn"
+          type="button"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
