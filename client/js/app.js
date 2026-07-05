@@ -79,6 +79,12 @@ function openConfirmationModal(title, message,confirmButtonText, onConfirm) {
   cancelConfirmBtn.onclick = () => {
     confirmModal.classList.add("hidden");
   };
+
+  confirmModal.onclick = (event) => {
+  if (event.target === confirmModal) {
+    confirmModal.classList.add("hidden");
+  }
+};
 }
 
 function addExpense() {
@@ -237,6 +243,15 @@ expenseList.addEventListener("deleteExpense", (event) => {
 
 window.addEventListener("scroll", updateActiveNavLink);
 window.addEventListener("load", updateActiveNavLink);
+
+window.addEventListener("keydown", (event) => {
+  if (
+    event.key === "Escape" &&
+    !confirmModal.classList.contains("hidden")
+  ) {
+    confirmModal.classList.add("hidden");
+  }
+});
 
 loadExpenses();
 
