@@ -50,7 +50,7 @@ import {
 
 import { renderCategoryChart } from "./chart.js";
 
-
+import { showToast } from "./notifications.js";
 
 
 
@@ -67,12 +67,18 @@ function addExpense() {
     expenseCategory === "" ||
     expenseDate === ""
   ) {
-    alert("Please enter expense name, amount, category, and date.");
+    showToast(
+      "Please enter expense name, amount, category, and date.",
+      "warning"
+    );
     return;
   }
 
   if (isNaN(expenseAmount) || expenseAmount <= 0) {
-    alert("Amount must be greater than zero.");
+    showToast(
+      "Amount must be greater than zero.",
+      "error"
+    );
     return;
   }
 
@@ -83,10 +89,15 @@ function addExpense() {
     date: expenseDate
   };
 
+
+  let message ="";
+
   if (state.editingExpenseIndex !== null) {
     updateExpense(expense);
+    message = "Expense updated successfully!";
   } else {
     addExpenseTransaction(expense);
+    message = "Expense added successfully!";
   }
   
   recalculateTotals();
@@ -103,6 +114,8 @@ function addExpense() {
   addExpenseBtn.textContent = "Add Expense";
   // remove editing class to return form to normal state
   addExpenseSection.classList.remove("editing");
+
+  showToast(message, "success");
 }
 
 
@@ -117,6 +130,11 @@ function clearAllExpenses() {
   renderCategoryChart();
 
   addExpenseBtn.textContent = "Add Expense";
+
+  showToast(
+    "All expenses cleared successfully!",
+    "info"
+  );
 }
 
 

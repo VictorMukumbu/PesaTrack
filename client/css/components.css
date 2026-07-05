@@ -339,3 +339,75 @@
 
   font-weight: var(--font-weight-semibold);
 }
+
+/* ======================================================
+   Toast Notifications
+====================================================== */
+
+#toastContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  z-index: 9999;
+}
+
+.toast {
+  min-width: 280px;
+  max-width: 360px;
+
+  padding: 14px 18px;
+
+  border-radius: 10px;
+
+  color: #ffffff;
+
+  font-weight: 600;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  opacity: 0;
+  transform: translateX(120%);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Success */
+
+.toast.success {
+  background: #f97316;
+  border-left: 6px solid #ea580c;
+}
+
+/* Error */
+
+.toast.error {
+  background: #dc2626;
+  border-left: 6px solid #991b1b;
+}
+
+/* Warning */
+
+.toast.warning {
+  background: #f59e0b;
+  color: #111827;
+  border-left: 6px solid #d97706;
+}
+
+/* Information */
+
+.toast.info {
+  background: #1f2937;
+  border-left: 6px solid #111827;
+}
