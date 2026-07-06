@@ -6,6 +6,7 @@ import {
   expenseDateInput,
   addExpenseBtn,
   clearExpensesBtn,
+  exportCsvBtn,
   expenseList,
   searchExpenseInput,
   sortExpensesSelect,

@@ -462,3 +462,13 @@
   justify-content: center;
   gap: 12px;
 }
+
+/* csv style */
+.export-btn {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.export-btn:hover {
+  filter: brightness(.95);
+}

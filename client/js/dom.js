@@ -27,6 +27,9 @@ export const addExpenseBtn =
 export const clearExpensesBtn =
   document.getElementById("clearExpensesBtn");
 
+export const exportCsvBtn =
+  document.getElementById("exportCsvBtn");  
+
 export const expenseList =
   document.getElementById("expenseList");
 
