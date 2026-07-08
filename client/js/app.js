@@ -252,6 +252,23 @@ function refreshDashboard() {
   renderCategoryChart();
 }
 
+function clearFilters() {
+  searchExpenseInput.value = "";
+
+  startDateFilter.value = "";
+
+  endDateFilter.value = "";
+
+  sortExpensesSelect.value = "default";
+
+  refreshDashboard();
+
+  showToast(
+    "Filters cleared.",
+    "info"
+  );
+}
+
 startDateFilter.addEventListener(
   "change",
   refreshDashboard
@@ -270,6 +287,11 @@ searchExpenseInput.addEventListener(
 sortExpensesSelect.addEventListener(
   "change",
   refreshDashboard
+);
+
+clearFiltersBtn.addEventListener(
+  "click",
+  clearFilters
 );
 
 expenseList.addEventListener("deleteExpense", (event) => {
