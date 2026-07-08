@@ -213,6 +213,14 @@ function updateActiveNavLink() {
 
 
 function exportCSV() {
+  if (state.expenses.length === 0) {
+    showToast(
+      "There are no expenses to export.",
+      "warning"
+    );
+    return;
+  }
+  
   const csv = generateCSV();
 
   // console.log(csv);

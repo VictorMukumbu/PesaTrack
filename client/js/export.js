@@ -14,11 +14,11 @@ export function generateCSV() {
   ];
 
   const rows = state.expenses.map((expense) => [
-    expense.name,
-    expense.amount,
-    expense.category,
-    expense.date,
-  ]);
+  `"${expense.name}"`,
+  expense.amount.toFixed(2),
+  `"${expense.category}"`,
+  expense.date,
+]);
 
   return [
     headers,
@@ -29,7 +29,7 @@ export function generateCSV() {
 }
 
 export function downloadCSV(csvData) {
-  const blob = new Blob([csvData], {
+  const blob = new Blob(["\uFEFF", csvData], {
     type: "text/csv;charset=utf-8;",
   });
 
