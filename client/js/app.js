@@ -59,6 +59,8 @@ import { renderCategoryChart } from "./chart.js";
 
 import { showToast } from "./notifications.js";
 
+import { generateCSV } from "./export.js";
+
 
 
 
@@ -208,11 +210,24 @@ function updateActiveNavLink() {
 }
 
 
+function exportCSV() {
+  const csv = generateCSV();
 
+  console.log(csv);
+
+  showToast(
+    "CSV generated successfully!",
+    "success"
+  );
+}
 
 
 addExpenseBtn.addEventListener("click", addExpense);
 clearExpensesBtn.addEventListener("click", clearAllExpenses);
+exportCsvBtn.addEventListener(
+  "click",
+  exportCSV
+);
 searchExpenseInput.addEventListener("input", renderExpenses);
 sortExpensesSelect.addEventListener("change", renderExpenses);
 
