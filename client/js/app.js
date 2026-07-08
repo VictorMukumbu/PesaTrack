@@ -246,13 +246,30 @@ exportCsvBtn.addEventListener(
 searchExpenseInput.addEventListener("input", renderExpenses);
 sortExpensesSelect.addEventListener("change", renderExpenses);
 
+function refreshDashboard() {
+  recalculateTotals();
+  renderExpenses();
+  renderCategoryChart();
+}
+
 startDateFilter.addEventListener(
   "change",
-  renderExpenses
+  refreshDashboard
 );
+
 endDateFilter.addEventListener(
   "change",
-  renderExpenses
+  refreshDashboard
+);
+
+searchExpenseInput.addEventListener(
+  "input",
+  refreshDashboard
+);
+
+sortExpensesSelect.addEventListener(
+  "change",
+  refreshDashboard
 );
 
 expenseList.addEventListener("deleteExpense", (event) => {

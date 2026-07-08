@@ -8,6 +8,8 @@ import { state } from "./state.js";
 
 import { getDefaultCategoryTotals,formatDate } from "./utils.js";
 
+import { getFilteredExpenses } from "./transactions.js";
+
 function updateTotalUI() {
   totalAmountDisplay.textContent = `KES ${state.total.toFixed(2)}`;
 }
@@ -21,7 +23,10 @@ function updateCategoryTotalsUI() {
 }
 //update dashboard insights
 function updateInsightsUI() {
-  const totalExpensesCount = state.expenses.length;
+  const expenses = getFilteredExpenses();
+
+  const totalExpensesCount = expenses.length;
+
   totalExpensesCountDisplay.textContent = totalExpensesCount;
 
   if (totalExpensesCount === 0) {
@@ -46,7 +51,8 @@ function updateInsightsUI() {
 
   topCategoryDisplay.textContent = topCategory;
 
-  const lastExpense = state.expenses[state.expenses.length - 1];
+  const lastExpense =
+  expenses[expenses.length - 1];
   lastExpenseDisplay.textContent = `${lastExpense.name} - KES ${lastExpense.amount.toFixed(2)} (${lastExpense.category}, ${formatDate(lastExpense.date) || "No date"})`;
 }
 
@@ -55,7 +61,9 @@ function recalculateTotals() {
   state.total = 0;
   state.categoryTotals = getDefaultCategoryTotals();
 
-  state.expenses.forEach((expense) => {
+  const expenses = getFilteredExpenses();
+
+  expenses.forEach((expense) => {
     state.total += expense.amount;
     state.categoryTotals[expense.category] += expense.amount;
   });
