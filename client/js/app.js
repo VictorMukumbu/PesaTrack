@@ -29,6 +29,10 @@ import {
   confirmMessage,
   confirmActionBtn,
   cancelConfirmBtn,
+
+  startDateFilter,
+  endDateFilter,
+  clearFiltersBtn,
 } from "./dom.js";
 
 import {
@@ -220,7 +224,7 @@ function exportCSV() {
     );
     return;
   }
-  
+
   const csv = generateCSV();
 
   // console.log(csv);
@@ -241,6 +245,15 @@ exportCsvBtn.addEventListener(
 );
 searchExpenseInput.addEventListener("input", renderExpenses);
 sortExpensesSelect.addEventListener("change", renderExpenses);
+
+startDateFilter.addEventListener(
+  "change",
+  renderExpenses
+);
+endDateFilter.addEventListener(
+  "change",
+  renderExpenses
+);
 
 expenseList.addEventListener("deleteExpense", (event) => {
   const expense = event.detail;

@@ -7,6 +7,8 @@ import {
   addExpenseBtn,
   searchExpenseInput,
   sortExpensesSelect,
+  startDateFilter,
+  endDateFilter,
   addExpenseSection,
 } from "./dom.js";
 
@@ -91,32 +93,72 @@ function createExpenseListItem(expense) {
 
   expenseList.appendChild(listItem);
 }
+function getFilteredExpenses() {
+  const searchTerm = searchExpenseInput.value.toLowerCase();
+  const sortValue = sortExpensesSelect.value;
+
+  const startDate = startDateFilter.value;
+  const endDate = endDateFilter.value;
+
+  let filteredExpenses = state.expenses.filter((expense) => {
+    const nameMatch = expense.name
+      .toLowerCase()
+      .includes(searchTerm);
+
+    const categoryMatch = expense.category
+      .toLowerCase()
+      .includes(searchTerm);
+
+    const dateMatch = (expense.date || "")
+      .toLowerCase()
+      .includes(searchTerm);
+
+    const matchesSearch =
+      nameMatch || categoryMatch || dateMatch;
+
+    const matchesStart =
+      !startDate || expense.date >= startDate;
+
+    const matchesEnd =
+      !endDate || expense.date <= endDate;
+
+    return (
+      matchesSearch &&
+      matchesStart &&
+      matchesEnd
+    );
+  });
+
+  if (sortValue === "name-asc") {
+    filteredExpenses.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortValue === "name-desc") {
+    filteredExpenses.sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
+  } else if (sortValue === "amount-asc") {
+    filteredExpenses.sort((a, b) =>
+      a.amount - b.amount
+    );
+  } else if (sortValue === "amount-desc") {
+    filteredExpenses.sort((a, b) =>
+      b.amount - a.amount
+    );
+  } else if (sortValue === "category-asc") {
+    filteredExpenses.sort((a, b) =>
+      a.category.localeCompare(b.category)
+    );
+  }
+
+  return filteredExpenses;
+}
+
 
 function renderExpenses() {
   expenseList.innerHTML = "";
 
-  const searchTerm = searchExpenseInput.value.toLowerCase();
-  const sortValue = sortExpensesSelect.value;
-
-  let filteredExpenses = state.expenses.filter((expense) => {
-    const nameMatch = expense.name.toLowerCase().includes(searchTerm);
-    const categoryMatch = expense.category.toLowerCase().includes(searchTerm);
-    const dateMatch = (expense.date || "").toLowerCase().includes(searchTerm);
-
-    return nameMatch || categoryMatch || dateMatch;
-  });
-
-  if (sortValue === "name-asc") {
-    filteredExpenses.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sortValue === "name-desc") {
-    filteredExpenses.sort((a, b) => b.name.localeCompare(a.name));
-  } else if (sortValue === "amount-asc") {
-    filteredExpenses.sort((a, b) => a.amount - b.amount);
-  } else if (sortValue === "amount-desc") {
-    filteredExpenses.sort((a, b) => b.amount - a.amount);
-  } else if (sortValue === "category-asc") {
-    filteredExpenses.sort((a, b) => a.category.localeCompare(b.category));
-  }
+  const filteredExpenses = getFilteredExpenses();
 
   if (filteredExpenses.length === 0) {
     const emptyMessage = document.createElement("li");
@@ -166,6 +208,7 @@ function clearAllExpenses() {
 
 export {
   createExpenseListItem,
+  getFilteredExpenses,
   renderExpenses,
   addExpense,
   updateExpense,
