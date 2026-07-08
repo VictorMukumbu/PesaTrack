@@ -59,7 +59,9 @@ import { renderCategoryChart } from "./chart.js";
 
 import { showToast } from "./notifications.js";
 
-import { generateCSV } from "./export.js";
+import { generateCSV,
+  downloadCSV,
+ } from "./export.js";
 
 
 
@@ -213,7 +215,8 @@ function updateActiveNavLink() {
 function exportCSV() {
   const csv = generateCSV();
 
-  console.log(csv);
+  // console.log(csv);
+  downloadCSV(csv);
 
   showToast(
     "CSV generated successfully!",

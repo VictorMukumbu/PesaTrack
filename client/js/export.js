@@ -27,3 +27,26 @@ export function generateCSV() {
     .map((row) => row.join(","))
     .join("\n");
 }
+
+export function downloadCSV(csvData) {
+  const blob = new Blob([csvData], {
+    type: "text/csv;charset=utf-8;",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+
+  const today = new Date().toISOString().split("T")[0];
+
+  link.href = url;
+  link.download = `pesatrack-expenses-${today}.csv`;
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+}
