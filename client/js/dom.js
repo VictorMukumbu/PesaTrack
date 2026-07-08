@@ -39,6 +39,15 @@ export const searchExpenseInput =
 export const sortExpensesSelect =
   document.getElementById("sortExpenses");
 
+export const startDateFilter =
+  document.getElementById("startDateFilter");
+
+export const endDateFilter =
+  document.getElementById("endDateFilter");
+
+export const clearFiltersBtn =
+  document.getElementById("clearFiltersBtn");  
+
 export const foodTotalDisplay =
   document.getElementById("foodTotal");
 

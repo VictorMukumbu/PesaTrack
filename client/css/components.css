@@ -472,3 +472,24 @@
 .export-btn:hover {
   filter: brightness(.95);
 }
+
+/* ======================================================
+   Date Filters
+====================================================== */
+
+.filter-grid {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  );
+
+  gap: 16px;
+
+  margin: 16px 0;
+}
+
+.clear-filters-btn {
+  margin-top: 8px;
+}

@@ -90,6 +90,33 @@
         />
       </div>
 
+      <!-- filter ui -->
+       <div class="filter-grid">
+
+        <div class="field">
+          <label for="startDateFilter">
+            Start Date
+          </label>
+
+          <input
+            id="startDateFilter"
+            type="date"
+          />
+        </div>
+
+        <div class="field">
+          <label for="endDateFilter">
+            End Date
+          </label>
+
+          <input
+            id="endDateFilter"
+            type="date"
+          />
+        </div>
+
+      </div>
+
       <!-- sort expenses by name, amount, or category -->
       <div class="field sort-field">
         <label for="sortExpenses">Sort Expenses</label>
@@ -101,6 +128,20 @@
           <option value="amount-desc">Amount (High to Low)</option>
           <option value="category-asc">Category (A-Z)</option>
         </select>
+      </div>
+
+      <!-- clear filters button -->
+       <div class="button-row">
+
+        <button
+          id="clearFiltersBtn"
+          class="btn clear-filters-btn"
+          type="button">
+
+          Clear Filters
+
+        </button>
+
       </div>
 
       <ul id="expenseList" class="list">
